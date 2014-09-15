@@ -12,4 +12,4 @@ Restart=always
 RestartSec=10s
 
 #[X-Fleet]
-#X-Conflicts=nginx-proxy-nis.*.service
+#X-Conflicts=nginx-proxy.*.service
