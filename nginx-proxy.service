@@ -12,4 +12,7 @@ Restart=always
 RestartSec=10s
 
 #[X-Fleet]
+# To run on few hosts
 #X-Conflicts=nginx-proxy.*.service
+# To run on one dedicated host
+#MachineMetadata=cpeer=some-machine 
