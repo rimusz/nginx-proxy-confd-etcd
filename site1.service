@@ -1,0 +1,16 @@
+[Unit]
+Description=site1
+After=docker.service
+Requires=docker.service
+
+[Service]
+User=core
+EnvironmentFile=/etc/environment
+ExecStart=/bin/bash -c '/usr/bin/docker start -a site1 || /usr/bin/docker run --rm --name site1 --hostname="site1" -p 12345:80 site1'
+ExecStartPost=/bin/bash -c '/usr/bin/etcdctl set \"/nginxproxy/websites/site1/ipandport\" $COREOS_PRIVATE_IPV4:12345'
+#
+ExecStop=/bin/bash -c '/usr/bin/docker stop site1; /usr/bin/docker rm site1'
+ExecStopPost=/bin/bash -c '/usr/bin/etcdctl rm /nginxproxy/websitess/site1/ipandport'
+
+Restart=always
+RestartSec=10s

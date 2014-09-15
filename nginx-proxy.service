@@ -1,0 +1,15 @@
+[Unit] 
+Description=nginx-proxy service 
+
+[Service] 
+User=core
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStart=/bin/bash -c '/usr/bin/docker start -a nginx-proxy || /usr/bin/docker run --rm --name nginx-proxy -p 80:80  nginx-proxy'
+ExecStop=/bin/bash -c '/usr/bin/docker stop nginx-proxy; /usr/bin/docker rm nginx-proxy'
+
+Restart=always
+RestartSec=10s
+
+#[X-Fleet]
+#X-Conflicts=nginx-proxy-nis.*.service
